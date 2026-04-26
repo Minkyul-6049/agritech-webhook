@@ -31,7 +31,7 @@ func main() {
 	// Health check endpoint for Docker/Kubernetes liveness probes
 	http.HandleFunc("/health", healthCheckHandler)
 	
-	// Main alert receiver endpoint
+	// Main alert receiver endpoint (Make sure Grafana URL ends with /alert)
 	http.HandleFunc("/alert", func(w http.ResponseWriter, r *http.Request) {
 		handleAlert(w, r, botToken, chatID)
 	})
@@ -74,8 +74,8 @@ func handleAlert(w http.ResponseWriter, r *http.Request, botToken string, chatID
 		return
 	}
 
-	// Format the alert message using Markdown for better readability in Telegram
-	message := fmt.Sprintf("🚨 *Agritech Alert* 🚨\n\n*Rule:* %s\n*State:* %s\n*Message:* %s", 
+	// Format the alert message using HTML to avoid Telegram Markdown parsing errors (e.g., underscores in rule names)
+	message := fmt.Sprintf("🚨 <b>Agritech Alert</b> 🚨\n\n<b>Rule:</b> %s\n<b>State:</b> %s\n<b>Message:</b> %s", 
 		alert.RuleName, alert.State, alert.Message)
 
 	// Dispatch the message to the Telegram API
@@ -90,11 +90,11 @@ func handleAlert(w http.ResponseWriter, r *http.Request, botToken string, chatID
 func sendTelegramMessage(botToken string, chatID string, text string) {
 	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/sendMessage", botToken)
 
-	// Prepare the JSON payload for Telegram
+	// Prepare the JSON payload for Telegram using HTML parse mode
 	payload := map[string]string{
 		"chat_id":    chatID,
 		"text":       text,
-		"parse_mode": "Markdown",
+		"parse_mode": "HTML",
 	}
 
 	jsonPayload, _ := json.Marshal(payload)
