@@ -252,7 +252,76 @@
         ]
     },
     {
-        "id": "930ff9b8a1454e11",
+        "id": "db28b0550d8e5012",
+        "type": "inject",
+        "z": "a9ae75c3b16829df",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 830,
+        "y": 180,
+        "wires": [
+            [
+                "085d19aa259740ec"
+            ]
+        ]
+    },
+    {
+        "id": "085d19aa259740ec",
+        "type": "http request",
+        "z": "a9ae75c3b16829df",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://192.168.202.132:9090/api/v1/query?query=up",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1050,
+        "y": 180,
+        "wires": [
+            [
+                "1d1ddd2a4449e3ec"
+            ]
+        ]
+    },
+    {
+        "id": "1d1ddd2a4449e3ec",
+        "type": "debug",
+        "z": "a9ae75c3b16829df",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a225008eba155ce2",
         "type": "global-config",
         "env": [],
         "modules": {
