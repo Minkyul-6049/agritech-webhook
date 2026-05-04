@@ -1,5 +1,186 @@
 [
     {
+        "id": "a9ae75c3b16829df",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4a93c127d4921ac5",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "d4b981135f898a31",
+        "type": "ui_tab",
+        "name": "Edge Command Center",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c4fede1c9a4bfbeb",
+        "type": "ui_group",
+        "name": "Digital Twin : Greenhouse Sector A",
+        "tab": "d4b981135f898a31",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5f5b53b8945571f5",
+        "type": "ui_template",
+        "z": "a9ae75c3b16829df",
+        "group": "c4fede1c9a4bfbeb",
+        "name": "",
+        "order": 0,
+        "width": "12",
+        "height": "15",
+        "format": "<div style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; height: 100%; min-height: 300px; padding: 10px; background-color: white; border: 1px solid #333; text-align: center; font-family: sans-serif;\">\n    \n    <!-- Zone 1 -->\n    <div style=\"background-color: {{msg.payload.c1 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 1<br><span style=\"font-size: 1.5em;\">{{msg.payload.v1 || '--'}}</span>\n    </div>\n    <!-- Zone 2 -->\n    <div style=\"background-color: {{msg.payload.c2 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 2<br><span style=\"font-size: 1.5em;\">{{msg.payload.v2 || '--'}}</span>\n    </div>\n    <!-- Zone 3 -->\n    <div style=\"background-color: {{msg.payload.c3 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 3<br><span style=\"font-size: 1.5em;\">{{msg.payload.v3 || '--'}}</span>\n    </div>\n    \n    <!-- Zone 4 -->\n    <div style=\"background-color: {{msg.payload.c4 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 4<br><span style=\"font-size: 1.5em;\">{{msg.payload.v4 || '--'}}</span>\n    </div>\n    <!-- Zone 5 -->\n    <div style=\"background-color: {{msg.payload.c5 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 5<br><span style=\"font-size: 1.5em;\">{{msg.payload.v5 || '--'}}</span>\n    </div>\n    <!-- Zone 6 -->\n    <div style=\"background-color: {{msg.payload.c6 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 6<br><span style=\"font-size: 1.5em;\">{{msg.payload.v6 || '--'}}</span>\n    </div>\n    \n    <!-- Zone 7 -->\n    <div style=\"background-color: {{msg.payload.c7 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 7<br><span style=\"font-size: 1.5em;\">{{msg.payload.v7 || '--'}}</span>\n    </div>\n    <!-- Zone 8 -->\n    <div style=\"background-color: {{msg.payload.c8 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 8<br><span style=\"font-size: 1.5em;\">{{msg.payload.v8 || '--'}}</span>\n    </div>\n    <!-- Zone 9 -->\n    <div style=\"background-color: {{msg.payload.c9 || '#0099cc'}}; border: 1px solid #000; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; border-radius: 5px;\">\n        Zone 9<br><span style=\"font-size: 1.5em;\">{{msg.payload.v9 || '--'}}</span>\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 340,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f0b7c0546aee0399",
+        "type": "ui_switch",
+        "z": "a9ae75c3b16829df",
+        "name": "",
+        "label": "Zone 2 Cooling Override",
+        "tooltip": "",
+        "group": "c4fede1c9a4bfbeb",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "{\"title\":\"🚨 EMERGENCY: Manual Override Activated\",\"ruleName\":\"Manual_Cooling_Override\",\"state\":\"firing\",\"message\":\"Zone 2 emergency cooling system has been manually activated! Immediate field inspection required.\"}",
+        "onvalueType": "json",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "{\"title\":\"✅ NORMAL: Manual Override Deactivated\",\"ruleName\":\"Manual_Cooling_Override\",\"state\":\"resolved\",\"message\":\"Zone 2 emergency cooling system has been stopped. System is returning to normal state.\"}",
+        "offvalueType": "json",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "5f5b53b8945571f5",
+                "19392c327538ae3e"
+            ]
+        ]
+    },
+    {
         "id": "75fb3eae41926571",
         "type": "inject",
         "z": "a9ae75c3b16829df",
@@ -27,5 +208,55 @@
                 "85adb5928ae7fa65"
             ]
         ]
+    },
+    {
+        "id": "85adb5928ae7fa65",
+        "type": "function",
+        "z": "a9ae75c3b16829df",
+        "name": "Temp Change Simulator",
+        "func": "let payload = {};\n\n// Loop through Zone 1 to Zone 9 to generate random simulated sensor values\nfor (let i = 1; i <= 9; i++) {\n    let temp = Math.floor(Math.random() * 15) + 20;     // Temperature: 20~35°C\n    let moisture = Math.floor(Math.random() * 40) + 10; // Soil Moisture: 10~50%\n    let nutrient = Math.floor(Math.random() * 10);      // Soil Nutrients: 0~9 (Probability simulator)\n\n    let color = \"#0099cc\"; // Default state: Normal (Deep Blue)\n    let displayValue = \"OK\";\n\n    // 🚨 Logic Rule (Priority: High Temp > Low Moisture > Low Nutrients)\n    if (temp >= 30) {\n        color = \"red\"; // High Temperature alert\n        displayValue = temp + \"°C\";\n    } else if (moisture <= 20) {\n        color = \"#ccffff\"; // Low Soil Moisture alert (Light Blue)\n        displayValue = moisture + \"% 💧\";\n    } else if (nutrient === 0) {\n        color = \"#33cc33\"; // Low Soil Nutrients alert (Green)\n        displayValue = \"Low N\";\n    }\n\n    // Store the color(c) and display value(v) in the payload object\n    payload[\"c\" + i] = color;\n    payload[\"v\" + i] = displayValue;\n}\n\nmsg.payload = payload;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "5f5b53b8945571f5"
+            ]
+        ]
+    },
+    {
+        "id": "19392c327538ae3e",
+        "type": "http request",
+        "z": "a9ae75c3b16829df",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://192.168.202.132:8080/alert",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 150,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "930ff9b8a1454e11",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
     }
 ]
