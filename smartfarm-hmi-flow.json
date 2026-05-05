@@ -125,6 +125,26 @@
         "className": ""
     },
     {
+        "id": "7c35ee6a1177fc1c",
+        "type": "ui_tab",
+        "name": "Infra",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "930374f8000d6b6e",
+        "type": "ui_group",
+        "name": "System Info",
+        "tab": "7c35ee6a1177fc1c",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
         "id": "5f5b53b8945571f5",
         "type": "ui_template",
         "z": "a9ae75c3b16829df",
@@ -255,7 +275,7 @@
         "id": "db28b0550d8e5012",
         "type": "inject",
         "z": "a9ae75c3b16829df",
-        "name": "",
+        "name": "Poll: 10s",
         "props": [
             {
                 "p": "payload"
@@ -272,7 +292,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 830,
+        "x": 820,
         "y": 180,
         "wires": [
             [
@@ -284,7 +304,7 @@
         "id": "085d19aa259740ec",
         "type": "http request",
         "z": "a9ae75c3b16829df",
-        "name": "",
+        "name": "GET Prom: Server Up",
         "method": "GET",
         "ret": "obj",
         "paytoqs": "ignore",
@@ -296,11 +316,11 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1050,
+        "x": 1080,
         "y": 180,
         "wires": [
             [
-                "1d1ddd2a4449e3ec"
+                "da42f62131848855"
             ]
         ]
     },
@@ -308,20 +328,63 @@
         "id": "1d1ddd2a4449e3ec",
         "type": "debug",
         "z": "a9ae75c3b16829df",
-        "name": "debug 1",
+        "name": "Log: Server Status",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1220,
+        "x": 1610,
         "y": 180,
         "wires": []
     },
     {
-        "id": "a225008eba155ce2",
+        "id": "da42f62131848855",
+        "type": "function",
+        "z": "a9ae75c3b16829df",
+        "name": "Parse Prom JSON",
+        "func": "// Extract the actual value from Prometheus JSON response\n// Prometheus 'up' query returns \"1\" (success) or \"0\" (fail)\nlet serverState = msg.payload.data.result[0].value[1];\n\n// Convert the raw value to a readable status\nlet statusMsg = (serverState === \"1\") ? \"🟢 Server UP\" : \"🔴 Server DOWN\";\n\n// Rebuild the payload for output\nmsg.payload = {\n    status: statusMsg,\n    rawData: serverState\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 180,
+        "wires": [
+            [
+                "1d1ddd2a4449e3ec",
+                "3e9660d2cc508f8d"
+            ]
+        ]
+    },
+    {
+        "id": "3e9660d2cc508f8d",
+        "type": "ui_text",
+        "z": "a9ae75c3b16829df",
+        "group": "930374f8000d6b6e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Prometheus Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1610,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3e6b5b95b8dc900a",
         "type": "global-config",
         "env": [],
         "modules": {
