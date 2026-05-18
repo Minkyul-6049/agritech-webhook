@@ -1,18 +1,25 @@
- # Step 1: 빌드 단계
-FROM golang:1.20-alpine AS builder
+# Step 1: Build stage (Matching local Go 1.22 version)
+FROM golang:1.22-alpine AS builder
 WORKDIR /app
+
+# Leverage Docker cache for dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code and build
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -o webhook-server main.go
 
-# Step 2: 실행 단계 (가벼운 이미지)
-FROM alpine:latest  
+# Step 2: Lightweight runtime stage
+FROM alpine:3.19
 WORKDIR /root/
 RUN apk --no-cache add ca-certificates tzdata
 
-# 빌드된 실행 파일 복사
+# Copy built binary from builder stage
 COPY --from=builder /app/webhook-server .
-# ⭐ 설정 파일(.env)을 이미지 내부로 복사 (이게 핵심!)
-COPY .env .
+
+# 🚨 SECURITY REMOVAL: Do NOT copy .env inside the image.
+# Environment variables will be injected dynamically at runtime via Docker/K3s.
 
 EXPOSE 8080
 CMD ["./webhook-server"]
