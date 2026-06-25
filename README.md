@@ -8,19 +8,43 @@
 A lightweight, resilient telemetry data pipeline designed for resource-constrained agricultural edge environments (Farm-nodes). This project demonstrates the migration from a legacy prototyping tool to a production-grade monitoring stack.
 
 ## 📸 Dashboard Overview
-<img width="1920" height="1080" alt="Screenshot 2026-06-23 234514" src="https://github.com/user-attachments/assets/ea04121e-2cfe-4ae7-810f-bf093a7a63bc" />
-
-![Agritech Edge Pipeline Status](./Screenshot_2026-06-23_234514_2.png)
+<img width="1920" height="1080" alt="Screenshot 2026-06-23 234514" src="https://github.com/user-attachments/assets/a483951d-2e76-4853-bae4-d522e484b2c3" />
 
 ## 🏗️ Architecture Flow
-The architecture is designed to ensure zero data loss and minimal resource overhead on the edge node:
+The architecture is designed to ensure zero data loss and minimal resource overhead on the edge node. 
 
-1. **Data Ingestion (Golang Webhook):** A highly optimized custom webhook written in Go receives sensor data (Temperature, Humidity, Soil Moisture).
-2. **Resource Management:** Runs as a standalone `systemd` daemon on the Linux edge node, ensuring high availability with `Restart=on-failure` auto-healing mechanisms. 
-3. **Metrics Storage (Prometheus):** Scrapes and stores time-series data efficiently within the K3s embedded cluster.
-4. **Visualization & Alerting (Grafana):** Provides real-time, actionable insights with clear thresholds. Critical alerts (e.g., node downtime, abnormal temperatures) are routed directly to **Telegram** for immediate operational response.
+### System Topology
+```mermaid
+graph LR
+    subgraph "Farm Node (192.168.202.131)"
+        Sensors["🌱 IoT Sensors<br>(Temp, Humidity, Soil)"]
+    end
 
-## 🚀 Key Achievements
-* **Extreme Resource Efficiency:** The Go ingestion webhook is optimized to consume less than **3 MiB of Memory** and **0.15% CPU**, proving its suitability for low-powered edge devices.
-* **Production-Grade Reliability:** Transitioned from Node-RED to a robust Grafana/Prometheus stack, implementing OS-level process management (systemd) to prevent alerting failures (e.g., resolving 404 Webhook delivery errors).
-* **Actionable Insights:** Configured intuitive thresholds (Green/Orange/Red) to prevent alert fatigue and bridge the communication gap between IT infrastructure and agronomy operations.
+    subgraph "Monitor Node (192.168.202.132)"
+        subgraph "K3s Embedded Cluster"
+            DB[("🗄️ Time-Series DB<br>(InfluxDB/Prometheus)")]
+            Grafana["📊 Grafana v10<br>(Dashboard & Alerting)"]
+        end
+        
+        subgraph "Linux OS (systemd)"
+            GoWebhook{"⚙️ Go Webhook Receiver<br>(Port: 8080/webhook)"}
+        end
+    end
+
+    Telegram["📱 Telegram API<br>(Mobile Alerts)"]
+
+    Sensors -- "Raw Data" --> DB
+    DB -- "Query" --> Grafana
+    Grafana -- "Alert Trigger<br>(HTTP POST)" --> GoWebhook
+    GoWebhook -- "Format & Route" --> Telegram
+
+    %% Styling
+    classDef k3s fill:#326ce5,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef os fill:#333,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef external fill:#0088cc,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef farm fill:#4caf50,stroke:#fff,stroke-width:2px,color:#fff;
+
+    class Grafana,DB k3s;
+    class GoWebhook os;
+    class Telegram external;
+    class Sensors farm;
